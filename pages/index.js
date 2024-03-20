@@ -1,13 +1,18 @@
 import { Inter } from "next/font/google";
-
+import HomePage from "../components/Home";
+import { useContext } from "react";
+import AuthContext from "@/store/auth-context";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const authCtx = useContext(AuthContext);
+
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+      className={`flex min-h-screen flex-col items-center p-24 border-solid border-2 border-white `}
     >
-      <h1>Omar Alfawareh</h1>
+      {authCtx.user ? null : <HomePage />}
+      {/* soon load boards component if user is available */}
     </main>
   );
 }
