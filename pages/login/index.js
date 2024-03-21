@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import AuthContext from "@/store/auth-context";
 
 function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const authCtx = useContext(AuthContext);
 
   function validateEmail(email) {
     return true;
@@ -50,11 +52,9 @@ function Login() {
                   setPassword(e.target.value);
                 }}
               />
-              <button href="/api/hello" className="button">
-                Login
-              </button>
+              <button className="button">Login</button>
               <button
-                href="/api/hello"
+                onClick={authCtx.googleLogin}
                 className="button bg-white border border-black hover:text-blue-500 hover:border-blue-500 hover:bg-white text-black"
               >
                 Login with Google
