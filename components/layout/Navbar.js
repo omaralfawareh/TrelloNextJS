@@ -6,12 +6,12 @@ function Navbar() {
   const authCtx = useContext(AuthContext);
 
   return (
-    <nav className="flex justify-center bg-gray-900 fixed w-full text-xl">
+    <nav className="flex justify-center p-2 bg-gray-900 fixed w-full text-xl">
       <div className="flex content-center justify-between w-[80%] p-1 rounded-lg">
         <Link
           type="button"
           href="/login"
-          className="align-middle button bg-blue-700 text-base"
+          className="align-middle button bg-blue-700 text-base font-bold"
         >
           <span>Treplica Logo</span>
         </Link>
@@ -47,15 +47,15 @@ function Navbar() {
             type="button"
             onClick={authCtx.signOut}
             href="/"
-            className="align-middle button bg-blue-700 text-base"
+            className="align-middle button bg-blue-700 text-base font-bold"
           >
-            <span>SignOut</span>
+            <span>Logout</span>
           </Link>
         ) : (
           <Link
             type="button"
             href="/login"
-            className="align-middle button bg-blue-700 text-base"
+            className="align-middle button bg-blue-700 text-base font-bold"
           >
             <span>Login</span>
           </Link>

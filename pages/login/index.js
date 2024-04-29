@@ -23,7 +23,7 @@ function Login() {
   }
   return (
     <>
-      <div className="flex  min-h-screen flex-col justify-center content-center items-center py-24">
+      <div className="flex flex-col justify-center content-center items-center py-24">
         <div className="container lg:w-1/3 md:w-full bg-gray-900 rounded-xl p-10 pt-5">
           <form onSubmit={handleFeedback}>
             <div className="flex flex-col p-4 pt-2">
