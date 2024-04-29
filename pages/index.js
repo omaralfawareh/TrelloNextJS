@@ -9,11 +9,9 @@ export default function Home() {
   const authCtx = useContext(AuthContext);
 
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center p-24 border-solid border-2 border-white `}
-    >
+    <>
       {authCtx.user ? <BoardsContainer /> : <HomePage />}
       {/* soon load boards component if user is available */}
-    </main>
+    </>
   );
 }

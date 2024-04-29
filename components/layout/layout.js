@@ -4,7 +4,7 @@ function Layout({ children }) {
   return (
     <>
       <Navbar></Navbar>
-      <main>{children}</main>
+      <main className="p-24 max-h-screen min-h-screen">{children}</main>
     </>
   );
 }

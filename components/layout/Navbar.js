@@ -1,19 +1,17 @@
 import { useContext } from "react";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import AuthContext from "@/store/auth-context";
 
 function Navbar() {
   const authCtx = useContext(AuthContext);
-  const router = useRouter();
 
   return (
-    <nav className="flex justify-center bg-gray-900 fixed w-full">
+    <nav className="flex justify-center bg-gray-900 fixed w-full text-xl">
       <div className="flex content-center justify-between w-[80%] p-1 rounded-lg">
         <Link
           type="button"
           href="/login"
-          className="align-middle button bg-blue-700"
+          className="align-middle button bg-blue-700 text-base"
         >
           <span>Treplica Logo</span>
         </Link>
@@ -29,7 +27,7 @@ function Navbar() {
           </li>
           <li>
             <Link
-              href="/"
+              href="/about"
               className=" text-center hover:text-blue-700 font-bold"
             >
               About
@@ -38,7 +36,7 @@ function Navbar() {
           <li>
             <Link
               href="/"
-              className="align-middle hover:text-blue-700 font-bold"
+              className="align-center hover:text-blue-700 font-bold"
             >
               Contact
             </Link>
@@ -49,7 +47,7 @@ function Navbar() {
             type="button"
             onClick={authCtx.signOut}
             href="/"
-            className="align-middle button bg-blue-700"
+            className="align-middle button bg-blue-700 text-base"
           >
             <span>SignOut</span>
           </Link>
@@ -57,7 +55,7 @@ function Navbar() {
           <Link
             type="button"
             href="/login"
-            className="align-middle button bg-blue-700"
+            className="align-middle button bg-blue-700 text-base"
           >
             <span>Login</span>
           </Link>
