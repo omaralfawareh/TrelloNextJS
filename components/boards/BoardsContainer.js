@@ -1,25 +1,38 @@
 import { useContext, useEffect, useState } from "react";
-import { db } from "@/firebase";
+import { auth, db } from "@/firebase";
 import { getDocs, collection } from "firebase/firestore";
 import AuthContext from "@/store/auth-context";
 import BoardCard from "./BoardCard";
 function BoardsContainer() {
   const authCtx = useContext(AuthContext);
   const [boards, setBoards] = useState([]);
+  function addBoardHandler() {
+    fetch("/api/boards/newBoard", {
+      method: "POST",
+      body: JSON.stringify({
+        name: "omarBoard",
+        description: "this is a new board made by a post request",
+      }),
+    });
+  }
+
   useEffect(() => {
     const fetchBoards = async () => {
       console.log(authCtx.user.uid);
+      const token = await authCtx.user.getIdToken();
+      console.log("token", token);
       const userBoardsRef = collection(db, `users/${authCtx.user.uid}/boards`);
       const querySnapshot = await getDocs(userBoardsRef);
       const data = [];
       querySnapshot.docs.map((doc) => {
-        data.push(doc.data());
+        // console.log(doc);
+        const board = { id: doc.id, ...doc.data() };
+        data.push(board);
       });
       setBoards(data);
     };
     try {
       fetchBoards();
-      // console.log("SUCCESS => ", boards);
     } catch (error) {
       console.log("FAILED => ", error);
     }
@@ -31,9 +44,9 @@ function BoardsContainer() {
         your <strong>DashBoard</strong>
       </h1>
       <div className="w-full flex flex-row p-10 gap-2 flex-wrap justify-center ">
-        {boards.map((board) => (
+        {/* {boards.map((board) => (
           <BoardCard />
-        ))}
+        ))} */}
         <BoardCard />
         <BoardCard />
         <BoardCard />
@@ -41,6 +54,9 @@ function BoardsContainer() {
         <BoardCard />
         <BoardCard />
         <BoardCard />
+        <button onClick={addBoardHandler}>New Board</button>
+
+        {console.log("SUCCESS => ", boards)}
       </div>
     </div>
   );
