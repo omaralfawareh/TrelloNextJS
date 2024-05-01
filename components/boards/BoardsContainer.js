@@ -44,16 +44,9 @@ function BoardsContainer() {
         your <strong>DashBoard</strong>
       </h1>
       <div className="w-full flex flex-row p-10 gap-2 flex-wrap justify-center ">
-        {/* {boards.map((board) => (
-          <BoardCard />
-        ))} */}
-        <BoardCard />
-        <BoardCard />
-        <BoardCard />
-        <BoardCard />
-        <BoardCard />
-        <BoardCard />
-        <BoardCard />
+        {boards.map((board) => (
+          <BoardCard name={board.name} description={board.description} />
+        ))}
         <button onClick={addBoardHandler}>New Board</button>
 
         {console.log("SUCCESS => ", boards)}

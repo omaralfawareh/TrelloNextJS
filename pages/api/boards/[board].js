@@ -1,12 +1,13 @@
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "@/firebase"; // Assuming db is the Firestore instance
+import { db } from "@/firebase";
 
 async function handler(req, res) {
   const boardID = req.query;
   if (req.method === "POST") {
     //Add serverSide Validation
     const { name, description } = JSON.parse(req.body);
-    console.log("data ==> ", name, "||", description);
+    // console.log("Req  ==> ", req.headers.authorization);
+    // console.log("data ==> ", name, "||", description);
     try {
       // Add the new board to Firestore
       const newBoardRef = await addDoc(
