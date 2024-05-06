@@ -1,7 +1,7 @@
 import Link from "next/link";
 function HomePage() {
   return (
-    <div className="w-1/2 border-solid border-2 text-center border-white ">
+    <div className="w-1/2 text-center ">
       <h1 className="text-6xl mt-10 mb-5">Welcome to Treplica</h1>
       <p>
         Step into the realm of efficient project management and collaboration
