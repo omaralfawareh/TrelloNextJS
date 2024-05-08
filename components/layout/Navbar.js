@@ -35,7 +35,7 @@ function Navbar() {
           </li>
           <li>
             <Link
-              href="/"
+              href="/contact"
               className="align-center hover:text-blue-700 font-bold"
             >
               Contact
