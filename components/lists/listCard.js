@@ -5,7 +5,11 @@ function ListCard({ name }) {
       <h5 className="mb-2 text-2xl text-center font-bold tracking-tight text-gray-900 dark:text-white">
         {name}
       </h5>
-      <Card />
+      <div className="flex flex-col gap-2">
+        <Card />
+        <Card />
+        <Card />
+      </div>
     </div>
   );
 }
