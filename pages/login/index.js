@@ -1,10 +1,11 @@
 import { useState, useContext } from "react";
 import AuthContext from "@/store/auth-context";
-
+import { useRouter } from "next/router";
 function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const authCtx = useContext(AuthContext);
+  const router = useRouter();
 
   function validateEmail(email) {
     return true;
@@ -20,6 +21,9 @@ function Login() {
         body: JSON.stringify({ email: email, password: password }),
       });
     }
+  }
+  if (authCtx?.user) {
+    router.push("/");
   }
   return (
     <>

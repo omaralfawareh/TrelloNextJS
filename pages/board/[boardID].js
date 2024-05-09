@@ -3,8 +3,9 @@ import { useEffect, useContext, useState } from "react";
 import AuthContext from "@/store/auth-context";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "@/firebase";
-import BoardCard from "../../components/boards/BoardCard";
-
+import ListCard from "../../components/lists/ListCard";
+import { getAuth } from "firebase/auth";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 function Board({}) {
   const authCtx = useContext(AuthContext);
   const { boardID } = useRouter().query;
@@ -46,6 +47,8 @@ function Board({}) {
   };
 
   useEffect(() => {
+    const user = getAuth();
+    console.log("USER ==> ", user.currentUser);
     if (authCtx?.user) {
       try {
         fetchBoards();
@@ -53,7 +56,7 @@ function Board({}) {
         console.log("FAILED => ", error);
       }
     }
-  }, [authCtx.user, boardID]);
+  }, [authCtx.user]);
 
   if (isLoading) {
     return (
@@ -63,24 +66,38 @@ function Board({}) {
     );
   }
   return (
-    <>
-      <div className="flex flex-col gap-5 items-center p-10 pt-5 w-full rounded-lg border-solid border-2">
-        <h1 className="text-3xl">
-          <strong>Board</strong> = {boardID}
-        </h1>
-        <div className="w-full flex flex-row p-10 gap-2 flex-wrap justify-center">
-          {lists.map((list) => (
-            <BoardCard
-              key={list.id}
-              id={list.id}
-              name={list.name}
-              description={list.description}
-            />
-          ))}
-          {/* <button onClick={addBoardHandler}>New Board</button> */}
-        </div>
-      </div>
-    </>
+    <div className="flex flex-col gap-5 items-center p-10 pt-5 w-full h-full rounded-lg border-solid border-2">
+      <h1 className="text-2xl">
+        <strong>Board</strong> = {boardID}
+      </h1>
+      <DragDropContext>
+        <Droppable droppableId="cards">
+          {(provided) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className="w-full flex h-full flex-row gap-5 flex-wrap justify-center"
+            >
+              {lists.map((list, index) => (
+                <Draggable key={list.id} draggableId={list.id} index={index}>
+                  {(provided) => (
+                    <ListCard
+                      id={list.id}
+                      name={list.name}
+                      description={list.description}
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    />
+                  )}
+                </Draggable>
+              ))}
+              {/* <button onClick={addBoardHandler}>New Board</button> */}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </div>
   );
 }
 export default Board;

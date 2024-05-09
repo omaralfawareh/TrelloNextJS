@@ -7,7 +7,7 @@ export default function Home() {
   const authCtx = useContext(AuthContext);
 
   return (
-    <div className="flex flex-col items-center ">
+    <div className="flex flex-col items-center">
       {authCtx.user ? <BoardsContainer /> : <HomePage />}
       {/* soon load boards component if user is available */}
     </div>
