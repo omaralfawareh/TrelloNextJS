@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { auth, db } from "@/firebase";
+import { db } from "@/firebase";
 import { getDocs, collection } from "firebase/firestore";
 import AuthContext from "@/store/auth-context";
 import BoardCard from "./BoardCard";
@@ -53,7 +53,12 @@ function BoardsContainer() {
       </h1>
       <div className="w-full flex flex-row p-10 gap-2 flex-wrap justify-center">
         {boards.map((board) => (
-          <BoardCard name={board.name} description={board.description} />
+          <BoardCard
+            key={board.id}
+            id={board.id}
+            name={board.name}
+            description={board.description}
+          />
         ))}
         <button onClick={addBoardHandler}>New Board</button>
 
