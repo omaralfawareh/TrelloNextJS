@@ -3,10 +3,10 @@ import { useEffect, useContext, useState } from "react";
 import AuthContext from "@/store/auth-context";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "@/firebase";
-import ListCard from "../../components/lists/ListCard";
+import ListCard from "../../components/lists/listCard";
 import { getAuth } from "firebase/auth";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-function Board({}) {
+function Board() {
   const authCtx = useContext(AuthContext);
   const { boardID } = useRouter().query;
   const [lists, setLists] = useState([]);

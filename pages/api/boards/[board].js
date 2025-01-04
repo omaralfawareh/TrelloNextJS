@@ -2,7 +2,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 
 async function handler(req, res) {
-  const boardID = req.query;
+  // const boardID = req.query;
   if (req.method === "POST") {
     //Add serverSide Validation
     const { name, description } = JSON.parse(req.body);
@@ -34,7 +34,7 @@ async function handler(req, res) {
     }
   }
 
-  if (req.method === "GET") {
-  }
+  // if (req.method === "GET") {
+  // }
 }
 export default handler;

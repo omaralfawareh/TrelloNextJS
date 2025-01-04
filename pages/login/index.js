@@ -7,10 +7,14 @@ function Login() {
   const authCtx = useContext(AuthContext);
   const router = useRouter();
 
+  // eslint-disable-next-line no-unused-vars
   function validateEmail(email) {
+    // TODO: Add email validation
     return true;
   }
+  // eslint-disable-next-line no-unused-vars
   function validatePassword(password) {
+    // TODO: Add email validation
     return true;
   }
   function handleFeedback(event) {
