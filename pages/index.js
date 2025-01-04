@@ -30,7 +30,7 @@ export async function getServerSideProps(ctx) {
   } catch (error) {
     // Handle error if token is invalid
     // TODO: Better handle this case (ex: redirect to login)
-    console.error("Error verifying token:", error);
+    console.error("Error verifying token:", error.message);
     return { props: { error: true } };
   }
 }
