@@ -15,7 +15,7 @@ credentials.json
 
 # production
 /build
-
+trellonextjs-firebase-admin.json
 # misc
 .DS_Store
 *.pem

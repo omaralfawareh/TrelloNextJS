@@ -4,7 +4,7 @@ import { AuthContextProvider } from "@/store/auth-context";
 
 export default function App({ Component, pageProps }) {
   return (
-    <AuthContextProvider>
+    <AuthContextProvider initialUser={pageProps.user}>
       <Layout>
         <Component {...pageProps} />
       </Layout>

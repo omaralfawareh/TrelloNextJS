@@ -2,14 +2,35 @@ import HomePage from "../components/Home";
 import { useContext } from "react";
 import AuthContext from "@/store/auth-context";
 import BoardsContainer from "../components/boards/BoardsContainer";
+import { authAdmin } from "../firebase-admin";
 
-export default function Home() {
+export default function Home({ user }) {
   const authCtx = useContext(AuthContext);
+  console.log("APP initial user", authCtx.user, "--", user);
 
   return (
     <div className="flex flex-col items-center">
-      {authCtx.user ? <BoardsContainer /> : <HomePage />}
+      {user ? <BoardsContainer /> : <HomePage />}
       {/* soon load boards component if user is available */}
     </div>
   );
+}
+export async function getServerSideProps(ctx) {
+  const cookies = ctx.req.cookies;
+  const token = cookies.token || null;
+  console.log("token", token);
+  try {
+    // Verify the token
+    const decodedToken = await authAdmin.verifyIdToken(token);
+
+    // Token is valid, decodedToken will contain user info
+    console.error("User Verified token:", decodedToken);
+
+    return { props: { user: decodedToken } };
+  } catch (error) {
+    // Handle error if token is invalid
+    // TODO: Better handle this case (ex: redirect to login)
+    console.error("Error verifying token:", error);
+    return { props: { error: true } };
+  }
 }
