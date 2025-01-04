@@ -6,6 +6,18 @@ import BoardCard from "./BoardCard";
 function BoardsContainer() {
   const authCtx = useContext(AuthContext);
   const [boards, setBoards] = useState([]);
+  const fetchBoards = async () => {
+    if (!authCtx?.user) return;
+    const userBoardsRef = collection(db, `users/${authCtx.user.uid}/boards`);
+    const querySnapshot = await getDocs(userBoardsRef);
+    const data = [];
+    querySnapshot.docs.map((doc) => {
+      // console.log(doc);
+      const board = { id: doc.id, ...doc.data() };
+      data.push(board);
+    });
+    setBoards(data);
+  };
   async function addBoardHandler() {
     try {
       const response = await fetch("/api/boards/newBoard", {
@@ -25,18 +37,6 @@ function BoardsContainer() {
   }
 
   useEffect(() => {
-    const fetchBoards = async () => {
-      if (!authCtx?.user) return;
-      const userBoardsRef = collection(db, `users/${authCtx.user.uid}/boards`);
-      const querySnapshot = await getDocs(userBoardsRef);
-      const data = [];
-      querySnapshot.docs.map((doc) => {
-        // console.log(doc);
-        const board = { id: doc.id, ...doc.data() };
-        data.push(board);
-      });
-      setBoards(data);
-    };
     try {
       fetchBoards();
     } catch (error) {
