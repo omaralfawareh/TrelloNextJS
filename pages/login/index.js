@@ -63,7 +63,7 @@ function Login() {
               <button className="button">Login</button>
               <button
                 onClick={authCtx.googleLogin}
-                className="button bg-white border border-black hover:text-blue-500 hover:border-blue-500 hover:bg-white text-black"
+                className="button bg-white border border-black hover:text-blue-500 hover:border-blue-500 hover:bg-white text-white"
               >
                 Login with Google
               </button>

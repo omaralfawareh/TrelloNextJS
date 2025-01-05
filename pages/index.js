@@ -4,13 +4,12 @@ import AuthContext from "@/store/auth-context";
 import BoardsContainer from "../components/boards/BoardsContainer";
 import { authAdmin } from "../firebase-admin";
 
-export default function Home({ user }) {
+export default function Home() {
   const authCtx = useContext(AuthContext);
-  console.log("APP initial user", authCtx.user, "--", user);
 
   return (
     <div className="flex flex-col items-center">
-      {user ? <BoardsContainer /> : <HomePage />}
+      {authCtx?.user ? <BoardsContainer /> : <HomePage />}
       {/* soon load boards component if user is available */}
     </div>
   );
