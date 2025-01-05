@@ -5,7 +5,7 @@ import AuthContext from "@/store/auth-context";
 import BoardCard from "./BoardCard";
 function BoardsContainer() {
   const authCtx = useContext(AuthContext);
-  const [boards, setBoards] = useState([]);
+  const [boards, setBoards] = useState(null);
   const fetchBoards = async () => {
     if (!authCtx?.user) return;
     const userBoardsRef = collection(db, `users/${authCtx.user.uid}/boards`);
@@ -18,7 +18,7 @@ function BoardsContainer() {
     });
     setBoards(data);
   };
-  async function addBoardHandler() {
+  async function addNewBoard() {
     try {
       const response = await fetch("/api/boards/newBoard", {
         method: "POST",
@@ -45,23 +45,35 @@ function BoardsContainer() {
   }, [authCtx.user]);
 
   return (
-    <div className="flex flex-col gap-5 items-center p-10 pt-5 w-full rounded-lg border-solid border-2">
+    <div className="flex flex-col gap-5 items-center p-10 pt-5 w-full rounded-lg relative min-h-[80vh] border-2">
       <h1 className="text-3xl">
         Welcome {authCtx?.user?.name || authCtx?.user?.displayName} to your{" "}
         <strong>DashBoard</strong>
       </h1>
-      <div className="w-full flex flex-row p-10 gap-2 flex-wrap justify-center">
-        {boards.map((board) => (
-          <BoardCard
-            key={board.id}
-            id={board.id}
-            name={board.name}
-            description={board.description}
-          />
-        ))}
-        <button onClick={addBoardHandler}>New Board</button>
+      <button
+        className="bg-blue-500 rounded px-3 py-1 text-lg absolute mr-3 right-0"
+        onClick={addNewBoard}
+      >
+        Add Board
+      </button>
 
-        {console.log("SUCCESS => ", boards)}
+      <div className="flex flex-col items-center justify-center w-full min-h-[70vh]">
+        {boards ? (
+          <div className="w-full flex flex-row p-10 gap-2 flex-wrap justify-center">
+            {boards.map((board) => (
+              <BoardCard
+                key={board.id}
+                id={board.id}
+                name={board.name}
+                description={board.description}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex items-center justify-center justify-self-center self-center">
+            <div className="h-8 w-8 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -58,45 +58,50 @@ function Board() {
     }
   }, [authCtx.user]);
 
-  if (isLoading) {
-    return (
-      <div className="flex flex-col gap-5 items-center p-10 pt-5 w-full rounded-lg border-solid border-2">
-        Loading...
-      </div>
-    );
-  }
   return (
-    <div className="flex flex-col gap-5 items-center p-10 pt-5 w-full h-full rounded-lg border-solid border-2">
+    <div className="flex flex-col gap-5 items-center p-10 pt-5 w-full h-full rounded-lg border-solid border-2 min-h-[80vh]">
       <h1 className="text-2xl">
         <strong>Board</strong> = {boardID}
       </h1>
-      <DragDropContext>
-        <Droppable droppableId="cards">
-          {(provided) => (
-            <div
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              className="w-full flex h-full flex-row gap-5 flex-wrap justify-center"
-            >
-              {lists.map((list, index) => (
-                <Draggable key={list.id} draggableId={list.id} index={index}>
-                  {(provided) => (
-                    <ListCard
-                      id={list.id}
-                      name={list.name}
-                      description={list.description}
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                    />
-                  )}
-                </Draggable>
-              ))}
-              {/* <button onClick={addBoardHandler}>New Board</button> */}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <div className="flex flex-col items-center justify-center w-full min-h-[70vh]">
+        {isLoading ? (
+          <div className="flex items-center justify-center justify-self-center self-center">
+            <div className="h-8 w-8 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <DragDropContext>
+            <Droppable droppableId="cards">
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className="w-full flex h-full flex-row gap-5 flex-wrap justify-center"
+                >
+                  {lists.map((list, index) => (
+                    <Draggable
+                      key={list.id}
+                      draggableId={list.id}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <ListCard
+                          id={list.id}
+                          name={list.name}
+                          description={list.description}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        />
+                      )}
+                    </Draggable>
+                  ))}
+                  {/* <button onClick={addBoardHandler}>New Board</button> */}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        )}
+      </div>
     </div>
   );
 }

@@ -6,7 +6,7 @@ function Navbar() {
   const authCtx = useContext(AuthContext);
 
   return (
-    <nav className="flex justify-center p-2 bg-gray-900 fixed w-full text-xl">
+    <nav className="flex justify-center p-2 bg-gray-900 fixed w-full text-xl z-10">
       <div className="flex content-center justify-between w-[80%] p-1 rounded-lg">
         <Link
           type="button"
