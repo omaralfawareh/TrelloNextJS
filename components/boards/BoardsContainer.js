@@ -1,49 +1,53 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { db } from "@/firebase";
 import { getDocs, collection } from "firebase/firestore";
 import AuthContext from "@/store/auth-context";
 import BoardCard from "./BoardCard";
+import { useQuery } from "@tanstack/react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
+
 function BoardsContainer() {
   const authCtx = useContext(AuthContext);
-  const [boards, setBoards] = useState(null);
+  const queryClient = useQueryClient();
+
   const fetchBoards = async () => {
-    if (!authCtx?.user) return;
     const userBoardsRef = collection(db, `users/${authCtx.user.uid}/boards`);
     const querySnapshot = await getDocs(userBoardsRef);
     const data = [];
     querySnapshot.docs.map((doc) => {
-      // console.log(doc);
       const board = { id: doc.id, ...doc.data() };
       data.push(board);
     });
-    setBoards(data);
+    return data;
   };
+
+  const { data: boards } = useQuery({
+    queryKey: ["boards"],
+    queryFn: fetchBoards,
+    enabled: !!authCtx?.user,
+  });
+
   async function addNewBoard() {
-    try {
-      const response = await fetch("/api/boards/newBoard", {
-        method: "POST",
-        body: JSON.stringify({
-          name: "omarBoard",
-          description: "this is a new board made by a post request",
-        }),
-      });
-      if (!response.ok) {
-        throw new Error("Failed", response.error);
-      }
-      fetchBoards();
-    } catch (error) {
-      console.log("Failed sending board => ", error);
-    }
+    // TODO: Add modal to add custom board
+    const response = await fetch("/api/boards/newBoard", {
+      method: "POST",
+      body: JSON.stringify({
+        name: "omarBoard",
+        description: "this is a new board made by a post request",
+      }),
+    });
+    console.log("omar response", response);
+    return response.data;
   }
-
-  useEffect(() => {
-    try {
-      fetchBoards();
-    } catch (error) {
-      console.log("FAILED => ", error);
-    }
-  }, [authCtx.user]);
-
+  const { mutate: createBoard } = useMutation({
+    mutationFn: addNewBoard,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["boards"]);
+    },
+    onError: (error) => {
+      console.error("Error adding board:", error);
+    },
+  });
   return (
     <div className="flex flex-col gap-5 items-center p-10 pt-5 w-full rounded-lg relative min-h-[80vh] border-2">
       <h1 className="text-3xl">
@@ -52,7 +56,7 @@ function BoardsContainer() {
       </h1>
       <button
         className="bg-blue-500 rounded px-3 py-1 text-lg absolute mr-3 right-0"
-        onClick={addNewBoard}
+        onClick={createBoard}
       >
         Add Board
       </button>
