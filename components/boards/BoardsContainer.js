@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { db } from "@/firebase";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, addDoc } from "firebase/firestore";
 import AuthContext from "@/store/auth-context";
 import BoardCard from "./BoardCard";
 import { useQuery } from "@tanstack/react-query";
@@ -27,22 +27,13 @@ function BoardsContainer() {
     enabled: !!authCtx?.user,
   });
 
-  async function addNewBoard() {
-    // TODO: Add modal to add custom board
-    const response = await fetch("/api/boards/newBoard", {
-      method: "POST",
-      body: JSON.stringify({
-        name: "omarBoard",
-        description: "this is a new board made by a post request",
-        id: authCtx?.user?.uid,
-      }),
-    });
-    console.log("omar response", response);
-    return response.data;
-  }
-
   const { mutate: createBoard } = useMutation({
-    mutationFn: addNewBoard,
+    mutationFn: () => {
+      addDoc(collection(db, `users/${authCtx?.user?.uid}/boards`), {
+        name: "New Board",
+        description: "This is a new board",
+      });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries(["boards"]);
     },
