@@ -39,6 +39,7 @@ function BoardsContainer() {
     console.log("omar response", response);
     return response.data;
   }
+
   const { mutate: createBoard } = useMutation({
     mutationFn: addNewBoard,
     onSuccess: () => {
@@ -50,16 +51,18 @@ function BoardsContainer() {
   });
   return (
     <div className="flex flex-col gap-5 items-center p-10 pt-5 w-full rounded-lg relative min-h-[80vh] border-2">
-      <h1 className="text-3xl">
-        Welcome {authCtx?.user?.name || authCtx?.user?.displayName} to your{" "}
-        <strong>DashBoard</strong>
-      </h1>
-      <button
-        className="bg-blue-500 rounded px-3 py-1 text-lg absolute mr-3 right-0"
-        onClick={createBoard}
-      >
-        Add Board
-      </button>
+      <div className="flex justify-between w-full">
+        <h1 className="text-3xl">
+          Welcome {authCtx?.user?.name || authCtx?.user?.displayName} to your{" "}
+          <strong>DashBoard</strong>
+        </h1>
+        <button
+          className="bg-blue-500 rounded-xl px-3 py-1" // absolute mr-3 right-0"
+          onClick={createBoard}
+        >
+          Add Board
+        </button>
+      </div>
 
       <div className="flex flex-col items-center justify-center w-full min-h-[70vh]">
         {boards ? (
@@ -70,6 +73,7 @@ function BoardsContainer() {
                 id={board.id}
                 name={board.name}
                 description={board.description}
+                {...board}
               />
             ))}
           </div>
