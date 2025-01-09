@@ -2,23 +2,15 @@ import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 
 async function handler(req, res) {
-  // const boardID = req.query;
   if (req.method === "POST") {
-    //Add serverSide Validation
-    const { name, description } = JSON.parse(req.body);
-    // console.log("Req  ==> ", req.headers.authorization);
-    // console.log("data ==> ", name, "||", description);
+    //TODO: Add serverSide Validation
+    const { name, description, id } = JSON.parse(req.body);
     try {
-      // Add the new board to Firestore
-      const newBoardRef = await addDoc(
-        collection(db, `users/5sn3Mhkrold8DXjKaD3oKNhBW6g2/boards`),
-        { name, description },
-        {
-          headers: {
-            Authorization: ``,
-          },
-        } // Include the authentication token in the request headers
-      );
+      // Add the new board to Firestore Databse
+      const newBoardRef = await addDoc(collection(db, `users/${id}/boards`), {
+        name,
+        description,
+      });
       const newBoardId = newBoardRef.id;
 
       res.status(201).json({
@@ -32,9 +24,12 @@ async function handler(req, res) {
         .status(500)
         .json({ success: false, message: "Failed to create board" + error });
     }
+  } else {
+    // Handle unsupported HTTP methods
+    return res.status(405).json({
+      success: false,
+      message: `Method ${req.method} not allowed`,
+    });
   }
-
-  // if (req.method === "GET") {
-  // }
 }
 export default handler;

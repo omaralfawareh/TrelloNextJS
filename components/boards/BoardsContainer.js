@@ -34,6 +34,7 @@ function BoardsContainer() {
       body: JSON.stringify({
         name: "omarBoard",
         description: "this is a new board made by a post request",
+        id: authCtx?.user?.uid,
       }),
     });
     console.log("omar response", response);
