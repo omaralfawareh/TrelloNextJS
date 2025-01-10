@@ -5,10 +5,10 @@ import { getDocs, collection } from "firebase/firestore";
 import { db } from "@/firebase";
 import ListCard from "../../components/lists/listCard";
 import { getAuth } from "firebase/auth";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 function Board() {
   const authCtx = useContext(AuthContext);
   const { boardID } = useRouter().query;
+  // eslint-disable-next-line no-unused-vars
   const [lists, setLists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -33,7 +33,7 @@ function Board() {
     if (!authCtx?.user) return;
     const userBoardsRef = collection(
       db,
-      `users/${authCtx.user.uid}/boards/${boardID}/lists`
+      `users/${authCtx.user.uid}/boards/${boardID}/lists`,
     );
     const querySnapshot = await getDocs(userBoardsRef);
     const data = [];
@@ -69,37 +69,16 @@ function Board() {
             <div className="h-8 w-8 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
           </div>
         ) : (
-          <DragDropContext>
-            <Droppable droppableId="cards">
-              {(provided) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className="w-full flex h-full flex-row gap-5 flex-wrap justify-center"
-                >
-                  {lists.map((list, index) => (
-                    <Draggable
-                      key={list.id}
-                      draggableId={list.id}
-                      index={index}
-                    >
-                      {(provided) => (
-                        <ListCard
-                          id={list.id}
-                          name={list.name}
-                          description={list.description}
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                        />
-                      )}
-                    </Draggable>
-                  ))}
-                  {/* <button onClick={addBoardHandler}>New Board</button> */}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+          <div className="w-full flex h-full flex-row gap-5 flex-wrap justify-center">
+            {[1, 2, 3].map((list, index) => (
+              <ListCard
+                key={index}
+                id={index}
+                name={"test"}
+                description={"this is a test"}
+              />
+            ))}
+          </div>
         )}
       </div>
     </div>
