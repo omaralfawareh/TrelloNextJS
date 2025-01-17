@@ -10,7 +10,7 @@ export function AuthContextProvider({ initialUser, children }) {
   const [, setCookie, removeCookie] = useCookies();
   const googleLogin = loginWithGoogle;
   const signOut = logout;
-  console.log("auth initial user", user);
+  console.log("auth Context initial user", user);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {

@@ -23,7 +23,7 @@ export async function getServerSideProps(ctx) {
     const decodedToken = await authAdmin.verifyIdToken(token);
 
     // Token is valid, decodedToken will contain user info
-    console.error("User Verified token:", decodedToken);
+    console.log("User Verified token:", decodedToken);
 
     return { props: { user: decodedToken } };
   } catch (error) {
