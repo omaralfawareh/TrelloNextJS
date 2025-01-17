@@ -11,8 +11,9 @@ function BoardsContainer() {
   const queryClient = useQueryClient();
 
   const fetchBoards = async () => {
-    const userBoardsRef = collection(db, `users/${authCtx.user.uid}/boards`);
-    const querySnapshot = await getDocs(userBoardsRef);
+    const querySnapshot = await getDocs(
+      collection(db, `users/${authCtx.user.uid}/boards`),
+    );
     const data = [];
     querySnapshot.docs.map((doc) => {
       const board = { id: doc.id, ...doc.data() };
@@ -27,8 +28,9 @@ function BoardsContainer() {
     enabled: !!authCtx?.user,
   });
 
-  const { mutate: createBoard } = useMutation({
-    mutationFn: () => {
+  const { mutate: createBoard, isPending } = useMutation({
+    mutationFn: async () => {
+      // Make new board
       addDoc(collection(db, `users/${authCtx?.user?.uid}/boards`), {
         name: "New Board",
         description: "This is a new board",
@@ -48,12 +50,15 @@ function BoardsContainer() {
           Welcome {authCtx?.user?.name || authCtx?.user?.displayName} to your{" "}
           <strong>DashBoard</strong>
         </h1>
-        <button
-          className="bg-blue-500 rounded-xl px-3 py-1" // absolute mr-3 right-0"
-          onClick={createBoard}
-        >
-          Add Board
-        </button>
+        <div className="flex flex-col justify-center items-center bg-blue-500 rounded-xl px-3 py-1 min-w-[100px]">
+          {!isPending ? (
+            <button onClick={createBoard} disabled={isPending}>
+              Add Board
+            </button>
+          ) : (
+            <div className="h-4 w-4 border-[3px] border-t-transparent border-white rounded-full animate-spin"></div>
+          )}
+        </div>
       </div>
 
       <div className="flex flex-col items-center justify-center w-full min-h-[70vh]">

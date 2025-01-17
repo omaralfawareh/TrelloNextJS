@@ -20,7 +20,7 @@ function BoardCard({ name, description, id }) {
     }
   };
 
-  //TODO:Add confirmation to delet board
+  //TODO:Add confirmation to delete board
   const { mutate: deleteBoard } = useMutation({
     mutationFn: handleDeleteBoard,
     onSuccess: () => {
