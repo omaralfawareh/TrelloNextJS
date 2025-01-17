@@ -15,15 +15,17 @@ function Navbar({ className }) {
       style={{ boxShadow: "rgb(51, 51, 51) 0px -1px 0px 0px inset" }}
     >
       <div className="flex content-center justify-between w-full py-1 px-10 rounded-lg">
-        <Link
-          type="button"
-          href="/login"
-          className="align-middle button !bg-black font-bold !text-white"
-          style={{ boxShadow: "rgba(255, 255, 255, 0.14) 0px 0px 0px 1px" }}
-        >
-          <span>Treplica Logo</span>
-        </Link>
-        <ul className="flex items-center content-end flex-row pt-1 space-x-10 block text-[18px]">
+        <div className="flex justify-start items-center w-[20%]">
+          <Link
+            type="button"
+            href="/login"
+            className="align-middle button !bg-black font-bold !text-white"
+            style={{ boxShadow: "rgba(255, 255, 255, 0.14) 0px 0px 0px 1px" }}
+          >
+            <span>Treplica Logo</span>
+          </Link>
+        </div>
+        <ul className="flex justify-center items-center content-end flex-row pt-1 gap-10 text-[18px]">
           <li>
             <Link href="/" className="hover:text-white" aria-current="page">
               <span className="text-center">Home</span>
@@ -40,24 +42,26 @@ function Navbar({ className }) {
             </Link>
           </li>
         </ul>
-        {authCtx?.user ? (
-          <Link
-            type="button"
-            onClick={authCtx.signOut}
-            href="/"
-            className="align-middle button !text-black bg-white font-bold"
-          >
-            <span>Logout</span>
-          </Link>
-        ) : (
-          <Link
-            type="button"
-            href="/login"
-            className="align-middle button !text-black bg-white font-bold"
-          >
-            <span>Login</span>
-          </Link>
-        )}
+        <div className="flex justify-end w-[20%] items-center">
+          {authCtx?.user ? (
+            <Link
+              type="button"
+              onClick={authCtx.signOut}
+              href="/"
+              className="align-middle button !text-black bg-white font-bold"
+            >
+              <span>Logout</span>
+            </Link>
+          ) : (
+            <Link
+              type="button"
+              href="/login"
+              className="align-middle button !text-black bg-white font-bold"
+            >
+              <span>Login</span>
+            </Link>
+          )}
+        </div>
       </div>
     </nav>
   );
