@@ -36,8 +36,10 @@ function Board() {
   );
 
   const handleDragEnd = async (event) => {
-    const { active } = event;
+    const { active, over } = event;
     const { id } = active;
+    const { id: overid } = over;
+    console.log("omar idss", id, overid);
     if (
       !activeIdTest.current ||
       !overIdTest.current ||
@@ -61,7 +63,7 @@ function Board() {
         ),
         activeCard,
       );
-      console.log("omar Adding", `/lists/${overIdTest.current}/cards/${id}`);
+      queryClient.invalidateQueries(["cards", overIdTest.current, boardID]);
     } catch (error) {
       console.log("Error adding card to new list:", error);
     }
@@ -72,10 +74,7 @@ function Board() {
         `users/${authCtx?.user?.uid}/boards/${boardID}/lists/${activeIdTest.current}/cards/${id}`,
       );
       await deleteDoc(activeDoc);
-      console.log(
-        "omar deleting",
-        `/lists/${activeIdTest.current}/cards/${id}`,
-      );
+      queryClient.invalidateQueries(["cards", activeIdTest.current, boardID]);
       activeIdTest.current = null;
     } catch (error) {
       console.log("Error deleting card:", error);

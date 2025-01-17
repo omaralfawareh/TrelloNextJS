@@ -44,7 +44,7 @@ function BoardsContainer() {
     },
   });
   return (
-    <div className="flex flex-col gap-5 items-center p-10 pt-5 w-full rounded-lg relative min-h-[80vh] border-2">
+    <div className="flex flex-col gap-5 items-center p-10 pt-5 w-full rounded-lg relative min-h-[80vh] ">
       <div className="flex justify-between w-full">
         <h1 className="text-3xl">
           Welcome {authCtx?.user?.name || authCtx?.user?.displayName} to your{" "}
@@ -61,9 +61,9 @@ function BoardsContainer() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center justify-center w-full min-h-[70vh]">
+      <div className="flex flex-col items-center justify-start w-full min-h-[70vh]">
         {boards ? (
-          <div className="w-full flex flex-row p-10 gap-2 flex-wrap justify-center">
+          <div className="w-full flex flex-row-reverse p-10 gap-2 flex-wrap justify-end ">
             {boards.map((board) => (
               <BoardCard
                 key={board.id}

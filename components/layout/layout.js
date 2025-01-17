@@ -1,10 +1,13 @@
 import Navbar from "@/components/layout/Navbar";
+import { GeistMono } from "geist/font/mono";
 
 function Layout({ children }) {
   return (
     <>
-      <Navbar></Navbar>
-      <main className="p-24 pb-5 h-screen">{children}</main>
+      <Navbar className={GeistMono.className}></Navbar>
+      <main className={`p-24 pb-5 h-screen ${GeistMono.className}`}>
+        {children}
+      </main>
     </>
   );
 }

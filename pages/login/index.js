@@ -32,7 +32,10 @@ function Login() {
   return (
     <>
       <div className="flex flex-col justify-center content-center items-center py-24">
-        <div className="container lg:w-1/3 md:w-full bg-gray-900 rounded-xl p-10 pt-5">
+        <div
+          className="container lg:w-1/3 md:w-full rounded-xl p-10 pt-5"
+          style={{ boxShadow: "rgba(255, 255, 255, 0.14) 0px 0px 0px 1px" }}
+        >
           <form onSubmit={handleFeedback}>
             <div className="flex flex-col p-4 pt-2">
               <h1 className="mb-5 font-bold">Login to your account</h1>
@@ -60,7 +63,9 @@ function Login() {
                   setPassword(e.target.value);
                 }}
               />
-              <button className="button">Login</button>
+              <button className="button hover:text-blue-500 hover:border-blue-500">
+                Login
+              </button>
               <button
                 onClick={authCtx.googleLogin}
                 className="button bg-white border border-black hover:text-blue-500 hover:border-blue-500 hover:bg-white text-white"

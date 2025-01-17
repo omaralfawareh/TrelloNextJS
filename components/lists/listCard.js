@@ -30,6 +30,7 @@ function ListCard({ id, boardID }) {
     queryFn: fetchCards,
     enabled: !!authCtx?.user,
   });
+
   const { mutate: addCard, isPending } = useMutation({
     mutationFn: () => {
       addDoc(
@@ -44,12 +45,13 @@ function ListCard({ id, boardID }) {
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["lists", boardID]);
+      queryClient.invalidateQueries(["cards", id, boardID]);
     },
     onError: (error) => {
       console.error("Error adding list to board:", error);
     },
   });
+
   if (isLoading) return null;
   return (
     <SortableContext id={id} items={cards?.map((item) => item.id)}>
@@ -69,11 +71,21 @@ function ListCard({ id, boardID }) {
             />
           ))}
           <button
-            className={classNames("w-full", { "bg-gray-500": isPending })}
+            className={classNames(
+              "w-full flex justify-center items-center gap-1",
+              {
+                "cursor-not-allowed": isPending,
+              },
+            )}
             onClick={addCard}
             disabled={isPending}
           >
-            + Add Card
+            {isPending ? (
+              <div className="h-4 w-4 border-[3px] border-t-transparent border-white rounded-full animate-spin"></div>
+            ) : (
+              <div>+</div>
+            )}{" "}
+            Add Card
           </button>
         </div>
       </div>
