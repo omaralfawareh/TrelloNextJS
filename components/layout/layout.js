@@ -5,7 +5,7 @@ function Layout({ children }) {
   return (
     <>
       <Navbar className={GeistMono.className}></Navbar>
-      <main className={`p-24 pb-5 h-screen ${GeistMono.className}`}>
+      <main className={`py-24 pb-5 h-screen ${GeistMono.className}`}>
         {children}
       </main>
     </>

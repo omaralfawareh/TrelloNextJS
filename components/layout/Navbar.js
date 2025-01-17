@@ -14,7 +14,7 @@ function Navbar({ className }) {
       )}
       style={{ boxShadow: "rgb(51, 51, 51) 0px -1px 0px 0px inset" }}
     >
-      <div className="flex content-center justify-between w-[85%] py-1 rounded-lg">
+      <div className="flex content-center justify-between w-full py-1 px-10 rounded-lg">
         <Link
           type="button"
           href="/login"

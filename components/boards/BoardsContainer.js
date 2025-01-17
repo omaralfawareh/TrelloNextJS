@@ -63,7 +63,7 @@ function BoardsContainer() {
 
       <div className="flex flex-col items-center justify-start w-full min-h-[70vh]">
         {boards ? (
-          <div className="w-full flex flex-row-reverse p-10 gap-2 flex-wrap justify-end ">
+          <div className="w-full flex flex-row-reverse py-10 gap-2 flex-wrap justify-end">
             {boards.map((board) => (
               <BoardCard
                 key={board.id}

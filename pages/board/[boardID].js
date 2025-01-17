@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import AuthContext from "@/store/auth-context";
+import Card from "@/components/cards/Card";
+
 import {
   getDocs,
   collection,
@@ -21,6 +23,7 @@ import {
   PointerSensor,
   KeyboardSensor,
   closestCorners,
+  DragOverlay,
 } from "@dnd-kit/core";
 function Board() {
   const authCtx = useContext(AuthContext);
@@ -28,6 +31,8 @@ function Board() {
   const queryClient = useQueryClient();
   const overIdTest = useRef(null);
   const activeIdTest = useRef(null);
+  const [activeCard, setActiveCard] = useState();
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -80,6 +85,16 @@ function Board() {
       console.log("Error deleting card:", error);
     }
   };
+  function handleDragStart(event) {
+    const { active } = event;
+    const { id } = active;
+    const activeContainer = findContainer(id);
+
+    const activeCard = queryClient
+      .getQueryData(["cards", activeContainer.id, boardID])
+      .find((card) => card.id === id);
+    setActiveCard(activeCard);
+  }
 
   function handleDragOver(event) {
     const { active, over, draggingRect } = event;
@@ -119,7 +134,7 @@ function Board() {
     const activeCard = queryClient
       .getQueryData(["cards", activeContainer.id, boardID])
       .find((card) => card.id === id);
-
+    // setActiveCard(activeCard);
     queryClient.setQueryData(
       ["cards", activeContainer.id, boardID],
       (oldData) => oldData.filter((card) => card.id !== id),
@@ -190,10 +205,11 @@ function Board() {
     <DndContext
       onDragEnd={handleDragEnd}
       onDragOver={handleDragOver}
+      onDragStart={handleDragStart}
       sensors={sensors}
       collisionDetection={closestCorners}
     >
-      <div className="flex flex-col gap-5 items-center p-10 pt-5 w-full h-full rounded-lg border-solid border-2 min-h-[80vh]">
+      <div className="flex flex-col gap-5 items-center p-10 pt-5 w-full h-full rounded-lg min-h-[80vh]">
         <div className="flex justify-between w-full">
           <h1 className="text-2xl ">
             <strong>Board</strong> = {boardID}
@@ -214,7 +230,7 @@ function Board() {
               <div className="h-8 w-8 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
             </div>
           ) : (
-            <div className="w-full flex h-full gap-5 flex-wrap justify-center flex-row-reverse">
+            <div className="flex w-full h-full gap-5 justify-start">
               {lists?.map(({ id, name, description }) => (
                 <ListCard
                   id={id}
@@ -228,6 +244,7 @@ function Board() {
           )}
         </div>
       </div>
+      <DragOverlay>{activeCard ? <Card {...activeCard} /> : null}</DragOverlay>
     </DndContext>
   );
 }

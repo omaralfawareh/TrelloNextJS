@@ -10,7 +10,6 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center">
       {authCtx?.user ? <BoardsContainer /> : <HomePage />}
-      {/* soon load boards component if user is available */}
     </div>
   );
 }
