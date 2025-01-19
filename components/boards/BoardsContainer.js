@@ -12,7 +12,7 @@ function BoardsContainer() {
 
   const fetchBoards = async () => {
     const querySnapshot = await getDocs(
-      collection(db, `users/${authCtx.user.uid}/boards`),
+      collection(db, `users/${authCtx?.user?.uid}/boards`),
     );
     const data = [];
     querySnapshot.docs.map((doc) => {

@@ -66,6 +66,8 @@ function ListCard({ id, boardID }) {
             <Card
               key={item.id}
               id={item.id}
+              listId={id}
+              boardID={boardID}
               name={item.name}
               description={item.description}
             />
