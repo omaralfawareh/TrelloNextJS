@@ -63,12 +63,12 @@ function Login() {
                   setPassword(e.target.value);
                 }}
               />
-              <button className="button hover:text-blue-500 hover:border-blue-500">
+              <button className="button hover:text-blue-500 hover:border-blue-500 !text-black">
                 Login
               </button>
               <button
                 onClick={authCtx.googleLogin}
-                className="button bg-white border border-black hover:text-blue-500 hover:border-blue-500 hover:bg-white text-white"
+                className="button bg-white border border-black !text-black hover:text-blue-500 hover:border-blue-500 hover:bg-white"
               >
                 Login with Google
               </button>
