@@ -19,6 +19,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@tanstack/react-query": "^5.62.15",
     "@tanstack/react-query-devtools": "^5.62.15",
+    "@vercel/analytics": "^1.4.1",
     "babel-plugin-react-compiler": "19.0.0-beta-63e3235-20250105",
     "classnames": "^2.5.1",
     "firebase": "^10.9.0",
